@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FDNY Fireground Radio Pilot — Dan Quinn Discussion</title>
+<style>
+:root{
+  --purple:#57068c;
+  --purple-2:#7a3aaa;
+  --ink:#26212c;
+  --muted:#68606f;
+  --line:#dfd8e6;
+  --pale:#f3edf7;
+  --stage:#211c29;
+  --good:#2f6b4f;
+  --candidate:#8b5a16;
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;background:var(--stage);color:var(--ink);font-family:Montserrat,Arial,sans-serif}
+body{overflow:hidden}
+button,a{-webkit-tap-highlight-color:transparent}
+button{font:inherit;cursor:pointer}
+a{color:inherit;text-underline-offset:4px}
+#stage{position:absolute;inset:0 0 38px;display:flex;align-items:center;justify-content:center}
+.slide{display:none;position:absolute;width:1600px;height:900px;padding:66px 80px 55px;background:white;transform:scale(var(--scale,1));overflow:hidden;transform-origin:center center}
+.slide.active{display:block}
+.topline{display:flex;align-items:center;justify-content:space-between;height:32px;margin-bottom:31px}
+.section{font-size:17px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--purple)}
+.brand{display:flex;align-items:center;justify-content:flex-end;min-width:156px;height:42px}
+.nyu-logo{display:block;width:150px;max-height:42px;object-fit:contain}
+.cover .nyu-logo{width:150px}
+.slide h1{font-size:54px;font-weight:650;line-height:1.12;letter-spacing:-1.8px;margin:0 0 24px}
+.slide h2{font-size:29px;line-height:1.22;margin:0 0 13px;font-weight:650}
+.slide p{margin:0 0 13px;font-size:24px;line-height:1.43}
+.muted{color:var(--muted)}
+.small{font-size:18px!important;line-height:1.43!important}
+.label{font-size:15px;font-weight:800;letter-spacing:1.6px;color:var(--purple);text-transform:uppercase;margin-bottom:10px}
+.footer{position:absolute;bottom:38px;left:80px;right:80px;border-top:1px solid var(--line);padding-top:13px;font-size:14px;color:var(--muted);display:flex;justify-content:space-between;gap:30px}
+.page{white-space:nowrap;font-variant-numeric:tabular-nums}
+
+/* Cover */
+.cover{background:var(--purple);color:white}
+.cover .section,.cover .brand{color:#eadbf2}
+.cover .topline{margin-bottom:56px}
+.cover h1{font-size:77px;line-height:1.05;letter-spacing:-3px;max-width:900px;margin-bottom:18px}
+.cover .subtitle{font-size:29px;color:#e7d6ef;max-width:920px;line-height:1.35}
+.cover .footer{color:#dac4e6;border-color:#8d51ad}
+.cover-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:56px;align-items:start}
+.incident-card{border:1px solid #a975c5;background:#ffffff12;padding:27px 30px 25px;margin-top:7px}
+.incident-card .place{font-size:31px;font-weight:650;line-height:1.23;margin-bottom:16px}
+.incident-card .detail{font-size:20px;line-height:1.45;color:#f0e4f5;margin:0 0 8px}
+.incident-card .caveat{font-size:15px;color:#d9c2e8;margin-top:18px;line-height:1.45}
+.cover-timeline{position:absolute;left:80px;right:80px;bottom:155px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid #9a64b9}
+.cover-stop{padding:16px 18px 0 0;position:relative}
+.cover-stop:before{content:"";position:absolute;width:10px;height:10px;border-radius:50%;background:white;top:-6px;left:0}
+.cover-stop .time{font-size:22px;font-weight:700}
+.cover-stop .desc{font-size:16px;color:#e4d2ed;margin-top:4px;line-height:1.3}
+.recording-chip{position:absolute;left:80px;bottom:92px;font-size:18px;color:white;background:#ffffff16;border-left:4px solid white;padding:10px 15px}
+
+/* Slide 2 */
+.timeline-layout{display:grid;grid-template-columns:1fr 360px;gap:38px;align-items:start}
+.figure-frame{border:1px solid var(--line);background:#fff;padding:10px}
+.figure-frame img{display:block;width:100%;height:auto}
+.metric-stack{display:grid;gap:15px}
+.metric{border-top:2px solid var(--purple);padding-top:12px}
+.metric .big{font-size:43px;font-weight:680;letter-spacing:-1.5px;color:var(--purple);line-height:1.05}
+.metric .caption{font-size:17px;color:var(--muted);line-height:1.35;margin-top:5px}
+.action-row{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+.action-btn,.reveal-btn,.ghost-btn{border:1px solid var(--purple);background:white;color:var(--purple);padding:11px 16px;font-weight:700;border-radius:3px;font-size:16px}
+.action-btn:hover,.reveal-btn:hover,.ghost-btn:hover{background:var(--pale)}
+.takeaway{position:absolute;left:80px;right:80px;bottom:83px;border-left:5px solid var(--purple);padding:9px 0 9px 21px;font-size:22px;line-height:1.34;font-weight:550}
+
+/* Slide 3 */
+.pipeline{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:22px 0 28px;align-items:stretch}
+.pipe{position:relative;border-top:2px solid var(--purple);padding:14px 10px 10px 0;min-height:92px}
+.pipe:not(:last-child):after{content:"→";position:absolute;right:-12px;top:35px;color:#a078b8;font-size:25px;font-weight:700}
+.pipe .n{font-size:13px;letter-spacing:1.3px;text-transform:uppercase;color:var(--purple);font-weight:800;margin-bottom:7px}
+.pipe .t{font-size:20px;font-weight:620;line-height:1.25}
+.story-callout{background:var(--pale);padding:17px 21px;font-size:24px;line-height:1.37;margin:0 0 24px}
+.story-callout strong{color:var(--purple)}
+.event-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.event-card{border-top:2px solid var(--purple);padding:16px 4px 0 0}
+.event-card .time{font-size:18px;color:var(--purple);font-weight:750;margin-bottom:7px}
+.event-card h2{font-size:26px;margin-bottom:6px}
+.event-card .status{font-size:15px;color:var(--muted);margin-bottom:12px}
+.event-card button{font-size:14px;padding:7px 10px}
+.status-candidate{color:var(--candidate)!important}
+.status-reviewed{color:var(--good)!important}
+.metrics-inline{position:absolute;right:80px;bottom:88px;font-size:15px;color:var(--muted)}
+
+/* Slide 4 */
+.cold-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:65px;align-items:center;margin-top:20px}
+.listen-block{border-left:5px solid var(--purple);padding:24px 0 24px 28px}
+.listen-time{font-size:61px;color:var(--purple);font-weight:680;letter-spacing:-2px;margin-bottom:8px}
+.listen-prompt{font-size:30px;line-height:1.35;font-weight:560;margin-bottom:22px}
+audio{width:100%;max-width:600px;margin:10px 0 9px}
+.audio-status{font-size:15px;color:var(--muted);line-height:1.35}
+.question-list{counter-reset:q;margin:0;padding:0;list-style:none}
+.question-list li{counter-increment:q;display:grid;grid-template-columns:42px 1fr;gap:13px;border-bottom:1px solid var(--line);padding:15px 0;font-size:24px;line-height:1.33}
+.question-list li:before{content:counter(q,decimal-leading-zero);color:var(--purple);font-weight:750;font-size:17px;padding-top:5px}
+.reveal-btn{margin-top:23px;background:var(--purple);color:white;border-color:var(--purple);padding:12px 18px}
+.reveal-btn:hover{background:#6b229b}
+#revealState{display:none}
+.reveal-layout{display:grid;grid-template-columns:800px 1fr;gap:32px;align-items:start}
+.reveal-figure img{width:100%;display:block;border:1px solid var(--line)}
+.reveal-facts{display:grid;gap:14px}
+.fact{border-top:2px solid var(--purple);padding-top:11px}
+.fact .k{font-size:14px;text-transform:uppercase;letter-spacing:1.3px;color:var(--purple);font-weight:800}
+.fact .v{font-size:19px;line-height:1.34;margin-top:4px}
+.reveal-question{background:var(--pale);padding:13px 15px;font-size:19px;line-height:1.34;margin-top:6px;font-weight:560}
+.reveal-controls{display:flex;gap:11px;margin-top:15px}
+
+
+.audio-card{margin-top:24px;background:#f4f1f6;border:1px solid #e2d9ea;border-left:5px solid var(--purple);padding:16px 18px;width:610px}
+.audio-card .audio-label{font-size:14px;letter-spacing:1.4px;text-transform:uppercase;font-weight:800;color:var(--purple);margin-bottom:8px}
+.audio-card code{font-family:Consolas,Menlo,monospace;font-size:16px;color:#2c2630;white-space:normal;line-height:1.4}
+
+/* Slide 5 */
+.scale-intro{background:var(--pale);padding:18px 22px;font-size:25px;line-height:1.35;font-weight:560;margin-bottom:27px}
+.scale-intro strong{color:var(--purple)}
+.need-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.need-col{border-top:2px solid var(--purple);padding-top:17px}
+.need-col h2{color:var(--purple);font-size:27px}
+.need-col ul{margin:8px 0 0;padding-left:24px}
+.need-col li{font-size:21px;line-height:1.37;margin:8px 0}
+.scale-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-top:26px}
+.scale-box{border:1px solid var(--line);padding:13px 15px;min-height:82px;background:#fff}
+.scale-box .k{font-size:13px;text-transform:uppercase;letter-spacing:1.2px;color:var(--purple);font-weight:800;margin-bottom:6px}
+.scale-box .v{font-size:17px;line-height:1.3}
+.archive-note{font-size:15px;color:var(--muted);margin-top:12px}
+
+.notes{display:none}
+
+/* Controls copied in spirit from the prior deck */
+#controls{position:fixed;bottom:0;height:44px;left:0;right:0;display:flex;justify-content:center;gap:10px;align-items:center;color:#d6cedd;background:var(--stage);font-size:12px;z-index:20}
+#controls button{color:inherit;background:none;border:0;border-radius:3px;padding:5px 10px;font-size:12px}
+#controls button:hover,#controls button:focus-visible{background:#45364f;outline:1px solid #9670ad}
+#controls button:disabled{opacity:.35;cursor:default}
+#counter{min-width:55px;text-align:center;font-variant-numeric:tabular-nums}
+#notesPanel{position:fixed;bottom:54px;right:20px;width:min(650px,92vw);max-height:70vh;overflow:auto;padding:26px;background:#fff;color:var(--ink);box-shadow:0 8px 50px #0007;border-top:5px solid var(--purple);z-index:30;font-size:17px;line-height:1.58}
+#notesPanel[hidden]{display:none}
+#notesPanel h2{font-size:20px;margin-top:0}
+#notesPanel p{margin:0 0 14px}
+
+/* Asset dialog / scrollable detailed graph */
+dialog{border:0;padding:0;width:min(96vw,1500px);height:min(92vh,850px);background:white;color:var(--ink);box-shadow:0 16px 80px #0009}
+dialog::backdrop{background:#13091ee8}
+.dialog-head{height:58px;display:flex;align-items:center;gap:12px;padding:0 16px 0 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:white;z-index:4}
+.dialog-head h2{font-size:19px;margin:0 auto 0 0}
+.dialog-head button{border:1px solid var(--line);background:white;padding:7px 10px;color:var(--ink)}
+.dialog-head button:hover{background:var(--pale)}
+.scroll-tools{display:flex;gap:6px}
+.dialog-body{height:calc(100% - 58px);overflow:auto;background:#f8f6fa;padding:12px}
+.dialog-body.scroll-x{overflow-x:auto;overflow-y:auto}
+.dialog-body img{display:block;background:white}
+.dialog-body:not(.scroll-x) img{max-width:100%;height:auto;margin:0 auto}
+.dialog-body.scroll-x img{max-width:none;width:auto;height:auto}
+
+body:fullscreen #stage{bottom:0}
+body:fullscreen #controls{opacity:0;transition:opacity .15s}
+body:fullscreen #controls:hover,body:fullscreen #controls:focus-within{opacity:1}
+
+@page{size:16in 9in;margin:0}
+@media print{
+ html,body{background:white;height:auto;overflow:visible}
+ #stage{display:block;position:static}
+ .slide,.slide.active{display:block;position:relative;transform:none;width:1600px;height:900px;zoom:.96;break-after:page;page-break-after:always}
+ .slide:last-child{break-after:auto}
+ #controls,#notesPanel,dialog{display:none!important}
+ *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<section class="slide cover active" id="slide-1" aria-label="Slide 1: Queens Box 7743">
+  <header class="topline">
+    <span class="section">FDNY research discussion</span>
+    <div class="brand"><img class="nyu-logo" src="https://engineering.nyu.edu/sites/default/files/inline-images/IdentityGuidelines_TandonWeb_SC2526_V16%28LogoBasics%29-04.png" alt="NYU Tandon"></div>
+  </header>
+  <div class="cover-grid">
+    <div>
+      <h1>Queens Box 7743</h1>
+      <p class="subtitle">Fireground radio reconstruction pilot for one confirmed incident timeline.</p>
+    </div>
+    <div class="incident-card">
+      <div class="place">24-37 89th Street<br>East Elmhurst, Queens</div>
+      <p class="detail">January 20, 2023 · three-story private dwelling</p>
+      <p class="detail">Fire reported on the first and second floors · escalated to a second alarm</p>
+      <p class="detail">Later determined to involve a lithium-ion battery / e-scooter</p>
+      <p class="detail">One fatality; multiple civilian and firefighter injuries</p>
+      <p class="caveat">Current incident match; recording provenance to confirm with FDNY.</p>
+    </div>
+  </div>
+  <div class="cover-timeline" aria-label="Public incident chronology">
+    <div class="cover-stop"><div class="time">~23:11</div><div class="desc">10-75 / initial fireground response</div></div>
+    <div class="cover-stop"><div class="time">~23:17</div><div class="desc">Second alarm transmitted</div></div>
+    <div class="cover-stop"><div class="time">00:09</div><div class="desc">Probably will hold</div></div>
+    <div class="cover-stop"><div class="time">~00:41</div><div class="desc">Reported under control</div></div>
+  </div>
+  <div class="recording-chip"><strong>Our 297 recordings:</strong> 23:11:51 → 00:38:51</div>
+  <div class="footer"><span>Minnie Zhang &amp; Tejas Siddaramaiah · NYU igNYte Lab / CS-UY 420X</span><span class="page">01 / 05</span></div>
+  <aside class="notes">
+    <p><strong>Speaking script</strong></p>
+    <p>Before showing any analysis, I want to anchor what we are actually looking at. These recordings appear to correspond to Queens Box 7743 on January 20, 2023, at 24-37 89th Street in East Elmhurst. It was a three-story private-dwelling fire that became a second alarm and was later determined to involve a lithium-ion battery.</p>
+    <p>What is useful for us is the timing. The public incident chronology begins around 23:11. The 297 files Matt gave us begin at 23:11:51 and continue until 00:38:51, only a couple of minutes before the incident was reported under control. So instead of treating these as 297 unrelated clips, we started asking whether they can be put back together into an incident-level picture.</p>
+    <p><strong>Additional reference details (for questions)</strong><br>Public chronology used for context: Queens Box 7743 incident reporting and contemporary New York news coverage. Public sources place the second alarm at approximately 23:17, PWH around 00:09, and under control around 00:41. Treat the match between those public records and Matt's recording set as strong but still provisional until FDNY confirms provenance.</p>
+  </aside>
+</section>
+
+<section class="slide" id="slide-2" aria-label="Slide 2: Reconstructing the timeline">
+  <header class="topline">
+    <span class="section">Reconstruction</span>
+    <div class="brand"><img class="nyu-logo" src="https://engineering.nyu.edu/sites/default/files/inline-images/IdentityGuidelines_TandonWeb_SC2526_V16%28LogoBasics%29-02.png" alt="NYU Tandon"></div>
+  </header>
+  <h1>Timestamped recordings as an incident timeline.</h1>
+  <div class="timeline-layout">
+    <div>
+      <div class="figure-frame"><img src="assets/figures/incident_timeline_summary.png" alt="Summary recording interval timeline"></div>
+      <div class="action-row">
+        <button class="action-btn" data-asset="assets/figures/incident_timeline_detailed.svg" data-title="Detailed recording interval timeline" data-scroll="1">Explore detailed timeline →</button>
+        <button class="action-btn" data-asset="assets/figures/radio_activity_detailed.svg" data-title="Detailed recorded activity" data-scroll="1">Explore detailed activity →</button>
+      </div>
+    </div>
+    <div class="metric-stack">
+      <div class="metric"><div class="big">297</div><div class="caption">recording files spanning one ~87-minute incident window</div></div>
+      <div class="metric"><div class="big">41.55 min</div><div class="caption">unique time covered by the supplied recording files</div></div>
+      <div class="metric"><div class="big">104</div><div class="caption">files begin while another recording interval is active</div></div>
+      <div class="metric"><div class="big">60.91 s</div><div class="caption">total temporal overlap across the incident window</div></div>
+    </div>
+  </div>
+  <div class="takeaway">The timeline describes the supplied recording files. It does not yet define channels, collisions, or radio-system behavior.</div>
+  <div class="footer"><span>Observation first: display rows are visualization only, not confirmed channels.</span><span class="page">02 / 05</span></div>
+  <aside class="notes">
+    <p><strong>Speaking script</strong></p>
+    <p>The files are not one continuous recording, so the first thing I did was recover their wall-clock placement from the filenames and durations. That gives us a descriptive timeline before we try to understand every word.</p>
+    <p>The summary view shows where recording activity becomes dense. The detailed button opens the wide SVG at its natural width, so if you want to inspect a particular time, like 23:17 or 23:30, we can scroll through the incident minute by minute rather than compressing everything into one image.</p>
+    <p>One thing we deliberately do not interpret yet is overlap. Two supplied files can cover the same wall-clock time, but we do not know whether that reflects channels, receivers, recorder behavior, or actual simultaneous traffic. That is one of the system-level questions we want Dan to help us understand.</p>
+    <p><strong>Additional reference details (for questions)</strong><br>Current descriptive summary: 87.02-minute recording window, 41.55 minutes of unique recorded-active time, 60.91 seconds of temporal overlap, maximum interval concurrency of two. “No recording active” means no supplied file covers that interval; it does not mean no one was speaking.</p>
+  </aside>
+</section>
+
+<section class="slide" id="slide-3" aria-label="Slide 3: From speech to incident events">
+  <header class="topline">
+    <span class="section">From audio to events</span>
+    <div class="brand"><img class="nyu-logo" src="https://engineering.nyu.edu/sites/default/files/inline-images/IdentityGuidelines_TandonWeb_SC2526_V16%28LogoBasics%29-02.png" alt="NYU Tandon"></div>
+  </header>
+  <h1>From transcript search to candidate operational events.</h1>
+  <div class="pipeline" aria-label="Analysis pipeline">
+    <div class="pipe"><div class="n">01</div><div class="t">Raw fireground audio</div></div>
+    <div class="pipe"><div class="n">02</div><div class="t">Local Whisper baseline</div></div>
+    <div class="pipe"><div class="n">03</div><div class="t">FDNY-informed phrase search</div></div>
+    <div class="pipe"><div class="n">04</div><div class="t">Candidate moments</div></div>
+    <div class="pipe"><div class="n">05</div><div class="t">Human / expert validation</div></div>
+    <div class="pipe"><div class="n">06</div><div class="t">Place events back into time</div></div>
+  </div>
+  <div class="story-callout"><strong>Goal:</strong> place candidate operational language back onto the incident timeline, then validate interpretation with expert review.</div>
+  <div class="event-grid">
+    <div class="event-card">
+      <div class="time">23:26</div><h2>hydrant water?</h2><div class="status status-candidate">candidate · uncertain</div>
+      <button class="action-btn" data-asset="assets/figures/hydrant_water_232604_candidate.png" data-title="Hydrant water candidate around 23:26">Inspect window</button>
+    </div>
+    <div class="event-card">
+      <div class="time">23:27</div><h2>heavy fire</h2><div class="status status-reviewed">human-reviewed</div>
+      <button class="action-btn" data-asset="assets/figures/heavy_fire_232713_human_confirmed.png" data-title="Heavy fire around 23:27">Inspect window</button>
+    </div>
+    <div class="event-card">
+      <div class="time">23:30</div><h2>making a push</h2><div class="status status-reviewed">human-reviewed</div>
+      <button class="action-btn" data-asset="assets/figures/making_push_233048_human_confirmed.png" data-title="Making a push around 23:30">Inspect window</button>
+    </div>
+    <div class="event-card">
+      <div class="time">23:34</div><h2>10-45</h2><div class="status status-reviewed">human-reviewed</div>
+      <button class="action-btn" data-asset="assets/figures/ten_45_233427_human_confirmed.png" data-title="10-45 around 23:34">Inspect window</button>
+    </div>
+  </div>
+  <div class="metrics-inline">Pilot scan: 751 Whisper segments · 100 normalized phrase variants · 123 hits across 84 files</div>
+  <div class="footer"><span>Whisper transcribes. A separate script searches the transcript for FDNY-informed phrases.</span><span class="page">03 / 05</span></div>
+  <aside class="notes">
+    <p><strong>Speaking script</strong></p>
+    <p>Once the recordings are back in time, the next question is whether we can recover operationally meaningful parts of the incident from what people are saying.</p>
+    <p>For this pilot I ran raw Whisper locally as a baseline. Whisper itself only transcribes. A separate script searches those transcripts using operational phrases that came from our FDNY discussions and Steve's follow-up emails. That gives us candidate moments to review and place back into the incident.</p>
+    <p>Some examples are fairly clear when I listen back, like “heavy fire,” “making a push,” and “10-45.” Those are useful because they start to look like incident milestones rather than isolated words. But a phrase can still be mistranscribed, misheard, retrospective, or meaningless without surrounding context. That is exactly why the next example is more important than the clean ones.</p>
+    <p><strong>Additional reference details (for questions)</strong><br>The event cards on this slide are not treated as expert ground truth. “Human-reviewed” here only means Minnie listened back and considered the phrase sufficiently clear for the pilot. The expert-validation step remains open.</p>
+  </aside>
+</section>
+
+<section class="slide" id="slide-4" aria-label="Slide 4: Expert validation">
+  <header class="topline">
+    <span class="section">Expert validation</span>
+    <div class="brand"><img class="nyu-logo" src="https://engineering.nyu.edu/sites/default/files/inline-images/IdentityGuidelines_TandonWeb_SC2526_V16%28LogoBasics%29-02.png" alt="NYU Tandon"></div>
+  </header>
+
+  <div id="coldState">
+    <h1>Expert review: 23:17:11 sample.</h1>
+    <div class="cold-grid">
+      <div class="listen-block">
+        <div class="listen-time">23:17:11</div>
+        <div class="listen-prompt">I will play this local audio file before showing our interpretation.</div>
+        <div class="audio-card">
+          <div class="audio-label">Audio to play locally</div>
+          <code>RECORDED ON 2023-01-20 AT 23.17.11 CHANNEL 1.MP3</code>
+        </div>
+        <button class="reveal-btn" id="revealBtn">Show current comparison →</button>
+      </div>
+      <ol class="question-list">
+        <li>What do you hear?</li>
+        <li>What is happening operationally?</li>
+        <li>Can this be understood by itself?</li>
+        <li>Would surrounding transmissions normally be required?</li>
+      </ol>
+    </div>
+  </div>
+
+  <div id="revealState">
+    <h1>Current interpretation: unresolved.</h1>
+    <div class="reveal-layout">
+      <div class="reveal-figure"><img src="assets/figures/urgent_231711_candidate.png" alt="Recorded activity around the 23:17 candidate"></div>
+      <div class="reveal-facts">
+        <div class="fact"><div class="k">Human review</div><div class="v">Uncertain: possible references to stairs / second floor and emergency-related language.</div></div>
+        <div class="fact"><div class="k">Whisper candidate</div><div class="v">Urgency or emergency-related language surfaced by transcript search.</div></div>
+        <div class="fact"><div class="k">Public chronology</div><div class="v">Second alarm transmitted at approximately 23:17; later incident reporting also notes collapsed stairs.</div></div>
+        <div class="fact"><div class="k">Recorded activity</div><div class="v">The candidate occurs shortly before an increase in recording activity.</div></div>
+        <div class="reveal-question">Question for expert review: is this an operationally meaningful event, and does the surrounding activity pattern mean anything given the recorder?</div>
+        <div class="reveal-controls"><button class="ghost-btn" id="resetReveal">← Back to cold view</button><button class="action-btn" data-asset="assets/figures/incident_timeline_detailed.svg" data-title="Detailed timeline — inspect around 23:17" data-scroll="1">Open detailed timeline</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer"><span>Cold review first. Model/context cues are shown only after expert interpretation.</span><span class="page">04 / 05</span></div>
+  <aside class="notes">
+    <p><strong>Speaking script — before reveal</strong></p>
+    <p>This is the example where I do not want to tell you what we think first. We listened to this yesterday and were not confident in what we were hearing. Rather than forcing a transcription, we want to know what you hear cold and whether this is even the kind of thing that can be interpreted from one isolated recording.</p>
+    <p><strong>Speaking script — after reveal</strong></p>
+    <p>Our current review is uncertain. Whisper surfaced urgency or emergency-related language, and we thought we may have heard references to stairs and the second floor. What makes the timing interesting is that this is around 23:17, which is also when the public incident chronology places the second alarm. Recorded activity then rises after this point.</p>
+    <p>We are not interpreting that as causation. What we want to know is whether this is a real operational event, whether our reading of it is wrong, whether you would need the surrounding transmissions to interpret it, and whether the activity pattern means anything given how the recording system actually works.</p>
+    <p><strong>Additional reference details (for questions)</strong><br>Yesterday's meeting explicitly identified this clip as a good cold-listen test for Dan. The scientific question is not just what the words are. If expert interpretation requires surrounding transmissions, then the system should probably analyze context windows or sequences rather than isolated clips.</p>
+  </aside>
+</section>
+
+<section class="slide" id="slide-5" aria-label="Slide 5: Validate and scale">
+  <header class="topline">
+    <span class="section">Validation / next steps</span>
+    <div class="brand"><img class="nyu-logo" src="https://engineering.nyu.edu/sites/default/files/inline-images/IdentityGuidelines_TandonWeb_SC2526_V16%28LogoBasics%29-02.png" alt="NYU Tandon"></div>
+  </header>
+  <h1>Validation requirements before scaling.</h1>
+  <div class="scale-intro"><strong>One fire is enough for a technical pilot.</strong> It is not enough to validate the research claim. We need expert interpretation and a correct model of the recording system before moving from one incident to many.</div>
+  <div class="need-grid">
+    <div class="need-col">
+      <h2>Expert interpretation</h2>
+      <ul>
+        <li>What do difficult transmissions actually say?</li>
+        <li>How much surrounding context is normally needed?</li>
+        <li>Which operational signals are both useful and realistically detectable?</li>
+        <li>Do expert-corrected audio / transcript pairs already exist?</li>
+        <li>If not, could a small subset be professionally reviewed?</li>
+      </ul>
+    </div>
+    <div class="need-col">
+      <h2>Recording system & data</h2>
+      <ul>
+        <li>What creates each recording file and timestamp?</li>
+        <li>What does temporal overlap mean?</li>
+        <li>What happens when another member keys up during existing traffic?</li>
+        <li>How do chief-rig / receiver recordings differ?</li>
+        <li>What metadata and larger internal archive can we access?</li>
+      </ul>
+    </div>
+  </div>
+  <div class="scale-strip">
+    <div class="scale-box"><div class="k">Validate</div><div class="v">Expert-reviewed audio / transcript examples</div></div>
+    <div class="scale-box"><div class="k">Understand</div><div class="v">Recorder, receiver and channel semantics</div></div>
+    <div class="scale-box"><div class="k">Access</div><div class="v">Larger internal incident archive / Chief Safety pathway</div></div>
+    <div class="scale-box"><div class="k">Scale</div><div class="v">Use incident-level structure to surface moments worth deeper review</div></div>
+  </div>
+  <div class="archive-note">FDNY discussion described a much larger internal archive on the order of ~15 years × ~100 incidents/day. Access and exact structure remain to be established.</div>
+  <div class="footer"><span>Technical pilot → expert validation → recorder semantics → larger incident archive.</span><span class="page">05 / 05</span></div>
+  <aside class="notes">
+    <p><strong>Speaking script</strong></p>
+    <p>This one incident is enough to test the technical pipeline, but it is not enough to make a general claim about FDNY operations.</p>
+    <p>The next step depends on two things. First, whether people with actual fireground expertise agree that we are extracting and interpreting useful information. Second, whether we understand how these recordings are created well enough to know what the timeline actually represents.</p>
+    <p>If we can validate those pieces, then the interesting long-term question becomes whether incident-level reconstruction can help search a much larger archive and surface incidents or periods that deserve human review. That is where expert-corrected recordings, the richer internal archive, receiver metadata, and the Chief of Safety pathway become important.</p>
+    <p><strong>Additional reference details (for questions)</strong><br>Earlier FDNY discussion described approximately 15 years of internal recordings at roughly 100 incidents per day and explained that multiple chief rigs can capture the same operation differently because of receiver position and line-of-sight. Treat those archive-size numbers as stakeholder-reported context, not a verified inventory.</p>
+  </aside>
+</section>
+
+</div>
+
+<div id="controls" aria-label="Presentation controls">
+  <button id="prev" aria-label="Previous slide">← Previous</button>
+  <span id="counter">1 / 5</span>
+  <button id="next" aria-label="Next slide">Next →</button>
+  <button id="notesBtn" aria-expanded="false">Notes (N)</button>
+  <button id="full">Fullscreen (F)</button>
+  <button id="print">Print</button>
+</div>
+
+<div id="notesPanel" hidden></div>
+
+<dialog id="assetDialog">
+  <div class="dialog-head">
+    <h2 id="assetTitle">Detail</h2>
+    <div class="scroll-tools" id="scrollTools" hidden>
+      <button data-jump="0">Start</button>
+      <button data-jump="0.061">23:17</button>
+      <button data-jump="0.218">23:30</button>
+      <button data-jump="0.260">23:34</button>
+    </div>
+    <button id="closeAsset">Close ×</button>
+  </div>
+  <div class="dialog-body" id="assetBody"><img id="assetImage" alt=""></div>
+</dialog>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+let current=0;
+const panel=document.getElementById('notesPanel');
+const dialog=document.getElementById('assetDialog');
+const assetBody=document.getElementById('assetBody');
+const assetImage=document.getElementById('assetImage');
+const scrollTools=document.getElementById('scrollTools');
+
+function fit(){
+  const stage=document.getElementById('stage');
+  document.documentElement.style.setProperty('--scale',Math.min(stage.clientWidth/1600,stage.clientHeight/900));
+}
+function show(n){
+  current=Math.max(0,Math.min(slides.length-1,n));
+  slides.forEach((s,i)=>{s.classList.toggle('active',i===current);s.setAttribute('aria-hidden',i!==current)});
+  document.getElementById('counter').textContent=`${current+1} / ${slides.length}`;
+  panel.innerHTML='<h2>Slide '+(current+1)+' · Presenter notes</h2>'+slides[current].querySelector('.notes').innerHTML;
+  history.replaceState(null,'','#'+(current+1));
+  document.getElementById('prev').disabled=current===0;
+  document.getElementById('next').disabled=current===slides.length-1;
+}
+function notes(){
+  panel.hidden=!panel.hidden;
+  document.getElementById('notesBtn').setAttribute('aria-expanded',String(!panel.hidden));
+}
+async function full(){
+  try{if(document.fullscreenElement)await document.exitFullscreen();else await document.body.requestFullscreen()}
+  catch(e){alert('Use your browser’s fullscreen command to present.');}
+}
+function openAsset(button){
+  assetImage.src=button.dataset.asset;
+  assetImage.alt=button.dataset.title||'Detail figure';
+  document.getElementById('assetTitle').textContent=button.dataset.title||'Detail';
+  const scrolling=button.dataset.scroll==='1';
+  assetBody.classList.toggle('scroll-x',scrolling);
+  scrollTools.hidden=!scrolling;
+  dialog.showModal();
+  requestAnimationFrame(()=>{assetBody.scrollLeft=0;assetBody.scrollTop=0;});
+}
+
+document.querySelectorAll('[data-asset]').forEach(btn=>btn.addEventListener('click',()=>openAsset(btn)));
+document.getElementById('closeAsset').onclick=()=>dialog.close();
+dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});
+document.querySelectorAll('[data-jump]').forEach(btn=>btn.addEventListener('click',()=>{
+  const p=Number(btn.dataset.jump||0);
+  assetBody.scrollLeft=Math.max(0,(assetBody.scrollWidth-assetBody.clientWidth)*p);
+}));
+
+document.getElementById('revealBtn').onclick=()=>{
+  document.getElementById('coldState').style.display='none';
+  document.getElementById('revealState').style.display='block';
+};
+document.getElementById('resetReveal').onclick=()=>{
+  document.getElementById('revealState').style.display='none';
+  document.getElementById('coldState').style.display='block';
+};
+
+document.getElementById('prev').onclick=()=>show(current-1);
+document.getElementById('next').onclick=()=>show(current+1);
+document.getElementById('notesBtn').onclick=notes;
+document.getElementById('full').onclick=full;
+document.getElementById('print').onclick=()=>window.print();
+
+addEventListener('keydown',e=>{
+  if(dialog.open)return;
+  const tag=document.activeElement?.tagName;
+  if(['AUDIO','BUTTON','INPUT','TEXTAREA','SELECT'].includes(tag) && e.key===' ')return;
+  if(e.ctrlKey||e.metaKey||e.altKey)return;
+  if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(current+1)}
+  else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(current-1)}
+  else if(e.key==='Home')show(0);
+  else if(e.key==='End')show(slides.length-1);
+  else if(e.key.toLowerCase()==='n')notes();
+  else if(e.key.toLowerCase()==='f')full();
+  else if(e.key==='Escape')panel.hidden=true;
+  else if(/^[1-5]$/.test(e.key))show(Number(e.key)-1);
+});
+
+let touchX=null;
+document.getElementById('stage').addEventListener('touchstart',e=>{touchX=e.changedTouches[0].clientX},{passive:true});
+document.getElementById('stage').addEventListener('touchend',e=>{
+  if(touchX!==null){const dx=e.changedTouches[0].clientX-touchX;if(Math.abs(dx)>60)show(current+(dx<0?1:-1));touchX=null}
+},{passive:true});
+
+addEventListener('resize',fit);
+document.addEventListener('fullscreenchange',fit);
+show((parseInt(location.hash.slice(1))||1)-1);
+fit();
+document.fonts?.ready?.then(fit);
+</script>
+</body>
+</html>
